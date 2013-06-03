@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+defaultTasks = ['assemble']
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+//jar.enabled = false // We don't produce a jar
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    bundle
+}
+
+dependencies {
+    compile     fileTree(dir: 'lib', include: '*.jar')
+    bundle      fileTree(dir: 'lib', include: '*.jar')
+    compile     "org.vert-x:vertx-core:$vertxVersion"
+    compile     "org.vert-x:vertx-platform:$vertxVersion"
+    compile     "org.slf4j:slf4j-simple:1.6.2"
+    testCompile "junit:junit:4.7"
+}
+
+task runVertx(type:Exec, dependsOn: 'compileJava') {
+    executable 'vertx'
+    args = ['run', "$mainVerticle",
+            '-cp', "${buildDir}/classes/main:${sourceSets.main.compileClasspath.getAsPath()}"]
+}
+

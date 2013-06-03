@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="js/sockjs-0.2.1.min.js"></script>
+        <script src="js/vertxbus.min.js"></script>
+        <script src="js/jquery-1.10.1.min.js"></script>
+    </head>
+    <body>
+        <div id="feedback" style="background: lightcyan">---</div>
+        <button id="click">Click</button>
+        <script>
+            var eb;
+            function init() {
+                console.debug("connecting");
+                eb = new vertx.EventBus(window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/sock');
+                eb.onopen = function() {
+                    console.log("open");
+
+                    eb.registerHandler("feedback", function(msg, replyTo) {
+                        $("#feedback").html(msg.value)
+                    });
+
+                };
+
+                eb.onclose = function() {
+                    console.log("closed");
+                    setTimeout(init, 5000);
+                };
+            }
+
+            init();
+
+            console.log("hello");
+
+            $("#click").click(function() {
+                eb.send('hello', { text : 'world' }, function(reply) {
+                    if (reply.status === 'ok') {
+                        console.debug('The very important communication layer got status ok');
+                    } else {
+                        console.error('Failed to send task');
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
