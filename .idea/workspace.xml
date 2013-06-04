@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89d0acee-0fff-4adf-88f5-8528b00f849e" name="Default" comment="ignore">
+    <list default="true" id="89d0acee-0fff-4adf-88f5-8528b00f849e" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="roboqo.iws" />
@@ -10,7 +10,7 @@
     <file path="/ServerVerticle.java" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370296087175" ignored="false" />
     <file path="/File Header.txt.ft" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370035680163" ignored="false" />
     <file path="/fragment.java" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370200998471" ignored="false" />
-    <file path="/Dummy.txt" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370366016228" ignored="false" />
+    <file path="/Dummy.txt" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370366059361" ignored="false" />
     <file path="/gradle.properties" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370198942353" ignored="false" />
     <file path="/build.gradle" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370293363752" ignored="false" />
     <file path="/logging.properties" changelist="89d0acee-0fff-4adf-88f5-8528b00f849e" time="1370202446846" ignored="false" />
@@ -879,7 +879,11 @@
       <created>1370366008326</created>
       <updated>1370366008326</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="ignore">
+      <created>1370366062621</created>
+      <updated>1370366062621</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
