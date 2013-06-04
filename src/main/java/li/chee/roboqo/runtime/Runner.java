@@ -23,6 +23,7 @@ public class Runner {
         CREATED,
         INVALID,
         RUNNING,
+        DONE,
         STOPPED
     }
 
@@ -65,7 +66,7 @@ public class Runner {
                 } catch (ScriptException | NoSuchMethodException e) {
                     LoggerFactory.getLogger(Runner.class).error("Could not run function " + name, e);
                 } finally {
-                    report(name, Status.STOPPED);
+                    report(name, Status.DONE);
                 }
             }
         });

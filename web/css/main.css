@@ -1,0 +1,8 @@
+.active {
+    background: aquamarine;
+}
+
+.big-textarea {
+    width: 400px;
+    height: 100px;
+}

@@ -34,7 +34,7 @@ public class RuntimeVerticle extends Verticle {
                                         message.reply(new JsonObject().putString("status", "error"));
                                         break;
                                 }
-                                eb.publish("script-"+name, status.toString());
+                                eb.publish("script-"+name, new JsonObject().putString("status", status.toString()));
                             }
                         });
                 }
