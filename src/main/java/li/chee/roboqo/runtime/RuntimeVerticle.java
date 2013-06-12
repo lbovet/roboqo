@@ -23,6 +23,9 @@ public class RuntimeVerticle extends Verticle {
                     case "start":
                         runner.start(name);
                         break;
+                    case "stop":
+                        runner.stop(name);
+                        break;
                     case "create":
                         runner.create(name, message.body.getString("script"), new Handler<Runner.Status>() {
                             public void handle(Runner.Status status) {

@@ -3,19 +3,92 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/icons-c.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.3.custom.css">
+        <link rel="stylesheet" type="text/css" href="css/layout-default-latest.css">
+
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        <script src="js/lib/sockjs-0.2.1.min.js"></script>
-        <script src="js/lib/vertxbus.min.js"></script>
-        <script src="js/lib/jquery-1.10.1.min.js"></script>
+        <script src="js/sockjs-0.2.1.min.js"></script>
+        <script src="js/vertxbus.min.js"></script>
+        <script src="js/jquery-1.10.1.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.js"></script>
+        <script src="js/jquery.layout-latest.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="container">
-            <textarea id="script" class="big-textarea">log.info("hello, you")</textarea>
-            <button id="run">Run</button>
-            <div id="feedback">---</div>
+        <div id="projects" class="ui-layout-west pane">
+            <div class="header">
+                <div id="folder" class="title-icon">
+                    <i class='icon-folder-close'></i>
+                </div>
+                <div class="title">
+                Projets
+                </div>
+                <div class="toolbar">
+                    <button id="project-new" class="btn btn-mini"><i class='icon-plus'></i></button>
+                </div>
+            </div>
         </div>
+
+        <div id="center-pane" class="ui-layout-center bare-pane">
+            <div id="tools" class="ui-layout-west pane">
+                <div class="header">
+                    <div class="title-icon">
+                        <i class='icon-wrench'></i>
+                    </div>
+                </div>
+                <div class="contents buttons">
+                    <div id="control-tool" class="tool">
+                        <i class="icon-c-algorhythm"></i>
+                    </div>
+                    <div id="0-tool" class="tool" style="margin-left:1px">
+                        <i class="icon-c-graduate"></i>
+                    </div>
+                    <div id="1-tool" class="tool" style="font-size:120%; margin-left:3px">
+                        <i class="icon-c-abacus"></i>
+                    </div>
+                    <div id="2-tool" class="tool">
+                        <i class="icon-c-settings3"></i>
+                    </div>
+                    <div id="3-tool" class="tool">
+                        <i class="icon-c-acsource"></i>
+                    </div>
+                    <div id="4-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                        <i class="icon-c-alert2"></i>
+                    </div>
+                    <div id="5-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                        <i class="icon-c-flag-2"></i>
+                    </div>
+                    <div id="6-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                        <i class="icon-c-plugin"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-layout-center bare-pane">
+                <iframe id="blockly-frame" src="blockly.html"></iframe>
+            </div>
+        </div>
+        <div id="control" class="ui-layout-east">
+            <div class="header">
+                <div class="title-icon">
+                    <i class='icon-th'></i>
+                </div>
+            </div>
+            <div class="contents buttons">
+                <button class="btn btn-success"><i class='icon-play'></i></button>
+            </div>
+        </div>
+        <!--
+        <textarea id="script" class="big-textarea">
+            __log__.info("hello, you");
+            __control__.sleep(10000);
+            __log__.info("bye");
+        </textarea>
+        <button id="run">Run</button>
+        <div id="feedback">---</div>
+        </div>
+        -->
     </body>
 </html>

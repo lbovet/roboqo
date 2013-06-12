@@ -11,10 +11,10 @@ public class RunnerTest {
     @Test
     public void simpleScript() throws InterruptedException {
         final Runner r = new Runner();
-        r.create("main", "log.info('hello')", new Handler<Runner.Status>() {
+        r.create("main", "__log__.info('hello')", new Handler<Runner.Status>() {
             public void handle(Runner.Status status) {
                 LoggerFactory.getLogger("RunnerTest").info(status.toString());
-                if(status== Runner.Status.STOPPED) {
+                if(status== Runner.Status.DONE) {
                     synchronized(r) {
                         r.notify();
                     }
