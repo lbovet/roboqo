@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Roboqo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/icons-c.css">
@@ -13,9 +14,11 @@
         <script src="js/vertxbus.min.js"></script>
         <script src="js/jquery-1.10.1.min.js"></script>
         <script src="js/jquery-ui-1.10.3.custom.js"></script>
+        <script src="js/jquery.mobile.custom.js"></script>
         <script src="js/jquery.layout-latest.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     </head>
     <body>
         <div id="projects" class="ui-layout-west pane">
@@ -24,44 +27,44 @@
                     <i class='icon-folder-close'></i>
                 </div>
                 <div class="title">
-                Projets
+
                 </div>
                 <div class="toolbar">
-                    <button id="project-new" class="btn btn-mini"><i class='icon-plus'></i></button>
+                        <button id="project-new" class="btn btn-mini"><i class='icon-plus'></i></button>
+                        <button id="project-del" class="btn btn-mini"><i class='icon-trash'></i></button>
                 </div>
+            </div>
+            <div id="project-container">
+                <ul id="project-list" class="list">
+                </ul>
             </div>
         </div>
 
         <div id="center-pane" class="ui-layout-center bare-pane">
             <div id="tools" class="ui-layout-west pane">
-                <div class="header">
-                    <div class="title-icon">
-                        <i class='icon-wrench'></i>
-                    </div>
-                </div>
-                <div class="contents buttons">
-                    <div id="control-tool" class="tool">
+                <div class="contents toolbox">
+                    <div id="0-tool" class="tool">
                         <i class="icon-c-algorhythm"></i>
                     </div>
-                    <div id="0-tool" class="tool" style="margin-left:1px">
+                    <div id="1-tool" class="tool" style="margin-left:1px">
                         <i class="icon-c-graduate"></i>
                     </div>
-                    <div id="1-tool" class="tool" style="font-size:120%; margin-left:3px">
+                    <div id="2-tool" class="tool" style="font-size:120%; margin-left:3px">
                         <i class="icon-c-abacus"></i>
                     </div>
-                    <div id="2-tool" class="tool">
+                    <div id="3-tool" class="tool">
                         <i class="icon-c-settings3"></i>
                     </div>
-                    <div id="3-tool" class="tool">
+                    <div id="4-tool" class="tool">
                         <i class="icon-c-acsource"></i>
                     </div>
-                    <div id="4-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                    <div id="5-tool" class="tool" style="font-size: 90%; margin-left:9px">
                         <i class="icon-c-alert2"></i>
                     </div>
-                    <div id="5-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                    <div id="6-tool" class="tool" style="font-size: 90%; margin-left:9px">
                         <i class="icon-c-flag-2"></i>
                     </div>
-                    <div id="6-tool" class="tool" style="font-size: 90%; margin-left:9px">
+                    <div id="7-tool" class="tool" style="font-size: 90%; margin-left:9px">
                         <i class="icon-c-plugin"></i>
                     </div>
                 </div>
@@ -79,6 +82,10 @@
             <div class="contents buttons">
                 <button class="btn btn-success"><i class='icon-play'></i></button>
             </div>
+        </div>
+
+        <div id="status" class="ui-layout-south">
+
         </div>
         <!--
         <textarea id="script" class="big-textarea">
