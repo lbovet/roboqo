@@ -163,18 +163,18 @@ $(document).ready(function () {
         west__maxSize: 256,
         west__slidable: false,
         west__resizable: false,
-        west__initClosed: false,
+        west__initClosed: true,
         west__spacing_closed: 32,
         west__togglerLength_closed: 32,
         west__togglerAlign_closed: "top",
-        west__togglerContent_closed: "<i class='icon-folder-close'></i>",
+        west__togglerContent_closed: "<div class='toggler-icon'><i class='icon-c-box'></i></div>",
         center__maskContents: true,
         east__size: 64,
         east__minSize: 64,
         east__maxSize: 200,
         east__closable: false,
-        south__size: 32,
-        south__minsize: 32,
+        south__size: 36,
+        south__minsize: 36,
         south__closable: false
     });
     layout.addCloseBtn( "#folder", "west" );
