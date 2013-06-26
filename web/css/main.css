@@ -9,7 +9,21 @@ body {
     cursor: default;
 }
 
-.active {
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+
+}
+
+::-webkit-scrollbar-thumb {
+    margin-right: 2px;
+    border-radius: 10px;
+    background: #ccc;
+}
+
+.active-project {
     background: #a0a0a0;
     color: white;
     font-weight: bold;
@@ -110,6 +124,10 @@ body {
     cursor: pointer;
 }
 
+#tools {
+    overflow-y: auto;
+}
+
 .tool {
     padding-top: 5px;
     font-size: 32px;
@@ -180,138 +198,14 @@ body {
     font-size: 32px;
 }
 
+.button {
+    margin-bottom: 10px;
+}
+
 #blockly-frame {
     display: block;
     border: 0;
     width: 100%;
     height: 100%;
     padding: 0px;
-}
-
-#status-bar {
-    background: #ddd;
-}
-
-.status {
-    margin-top: 3px;
-    height: 24px;
-    padding-top: 4px;
-    padding-left:4px;
-    padding-right: 6px;
-    min-width: 24px;
-    background: white;
-    float: left;
-}
-
-.status-single {
-    margin-left: 8px;
-    border-radius: 12px;
-}
-
-.status-left {
-    margin-left: 8px;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-    border-right: 1px solid #ddd;
-}
-
-.status-center {
-    border-right: 1px solid #ddd;
-}
-
-.status-right {
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    border-right: 1px solid #ddd;
-}
-
-.status-icon {
-    margin-top: 2px;
-    margin-left: 5px;
-    margin-right: 5px;
-    color: #515151;
-    float: left;
-}
-
-.ok {
-    color: #488b51;
-    text-shadow: 0 0 12px #2f2;
-}
-
-.problem {
-    color: #bc140c;
-}
-
-.id {
-    margin-left: 1px;
-    text-align: center;
-    border-radius: 12px;
-    color: #888;
-    font-weight: bold;
-    font-size: 14px;
-    float: left;
-}
-
-.circle
-{
-    margin-top: 3px;
-    margin-left: 4px;
-    float: left;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid #666;
-}
-
-.meter {
-    border: 1px solid #666;
-    margin-top: 2px;
-    margin-left: 3px;
-    margin-right: 3px;
-    width: 32px;
-    height: 12px;
-    float: left;
-}
-
-.value {
-    margin:0;
-    height: 12px;
-    background: #aaa;
-    width: 13px;
-    float: left;
-}
-
-.rotating {
-    margin-top: -2px;
-    padding-top: 2px;
-    padding-left: 5px;
-    color: #515151;
-    width: 21px;
-    height: 21px;
-    -webkit-animation-name: rotate;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: 3;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-name: rotate;
-    -moz-animation-duration: 1s;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: linear;
-}
-
-@-webkit-keyframes rotate {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@-moz-keyframes rotate {
-    from {
-        -moz-transform: rotate(0deg);
-    }
-    to {
-        -moz-transform: rotate(360deg);
-    }
 }

@@ -10,12 +10,16 @@
         <link rel="stylesheet" type="text/css" href="css/layout-default-latest.css">
 
         <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="css/status.css">
         <script src="js/sockjs-0.2.1.min.js"></script>
         <script src="js/vertxbus.min.js"></script>
         <script src="js/jquery-1.10.1.min.js"></script>
         <script src="js/jquery-ui-1.10.3.custom.js"></script>
         <script src="js/jquery.mobile.custom.js"></script>
         <script src="js/jquery.layout-latest.min.js"></script>
+        <script src="js/status.js"></script>
+        <script src="js/network.js"></script>
+        <script src="js/control.js"></script>
         <script src="js/main.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
@@ -80,98 +84,105 @@
                 </div>
             </div>
             <div class="contents buttons">
-                <button class="btn btn-success"><i class='icon-play'></i></button>
+                <button class="button btn btn-success"><i class='icon-c-play'></i></button>
+                <button class="button btn disabled"><i class='icon-c-stop-2'></i></button>
             </div>
         </div>
 
         <div id="status-bar" class="ui-layout-south">
             <div class="status status-single">
                 <i class="status-icon icon-c-router"></i>
-                <i class="status-icon icon-c-ok ok"></i>
+                <i id="server-status" class="status-icon icon-c-plug inactive"></i>
             </div>
             <div class="status status-single">
                 <i class="status-icon icon-c-graphicscard"></i>
-                <i class="status-icon icon-c-plug problem"></i>
+                <i id="controller-status" class="status-icon icon-c-plug inactive"></i>
             </div>
             <div class="status status-left">
                 <i class="status-icon icon-c-steam-2"></i>
             </div>
             <div class="status status-center">
-                <div class="rotating">
+                <div id="servo-1" class="rotating activable inactive">
                     <i class="icon-c-thermometer"></i><div></div>
                 </div>
             </div>
             <div class="status status-center">
-                <div class="rotating">
+                <div id="servo-2" class="rotating activable inactive">
                     <i class="icon-c-thermometer"></i><div></div>
                 </div>
             </div>
             <div class="status status-center">
-                <div class="rotating">
+                <div id="servo-3" class="rotating activable inactive">
                     <i class="icon-c-thermometer"></i><div></div>
                 </div>
             </div>
-            <div class="status status-right">
-                <div class="rotating">
+            <div class="status status-center">
+                <div id="servo-4" class="rotating activable inactive">
                     <i class="icon-c-thermometer"></i><div></div>
                 </div>
             </div>
-            <div class="status status-left">
-                <div class="rotating">
+            <div class="status status-center">
+                <div id="motor-1" class="rotating activable inactive">
                     <i class="icon-c-cd"></i>
                 </div>
             </div>
-            <div class="status status-right">
-                <div class="rotating">
+            <div class="status status-center">
+                <div id="motor-2" class="rotating activable inactive">
                     <i class="icon-c-cd"></i>
                 </div>
             </div>
-            <div class="status status-left">
-                <i class="status-icon icon-c-feed"></i>
+            <div class="status status-center">
+                <i id="vibration-1" class="status-icon icon-c-feed vibrating activable inactive"></i>
             </div>
             <div class="status status-right">
-                <i class="status-icon icon-c-feed"></i>
+                <i id="vibration-2" class="status-icon icon-c-feed vibrating activable inactive"></i>
             </div>
             <div class="status status-left">
                 <i class="status-icon icon-c-sun-stroke"></i>
             </div>
             <div class="status status-center">
-                <div class="circle"></div>
+                <div id="led-1" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-center">
-                <div class="circle"></div>
+                <div id="led-2" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-center">
-                <div class="circle"></div>
+                <div id="led-3" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-right">
-                <div class="circle"></div>
+                <div id="led-4" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-left">
                 <i class="status-icon icon-c-brightness-contrast"></i>
             </div>
             <div class="status status-center">
-                <div class="circle"></div>
+                <div id="triled-1" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-right">
-                <div class="circle"></div>
+                <div id="triled-2" class="circle activable-border inactive-border"></div>
             </div>
             <div class="status status-left">
                 <i class="status-icon icon-c-gauge"></i>
             </div>
-            <div class="status status-center">
-                <div class="meter">
+            <div class="status status-center activable-border">
+                <div id="sensor-1" class="meter activable-border inactive-border">
                     <div class="value"></div>
                 </div>
             </div>
             <div class="status status-center">
-                <div class="meter"></div>
+                <div id="sensor-2" class="meter activable-border inactive-border">
+                    <div class="value"></div>
+                </div>
             </div>
             <div class="status status-center">
-                <div class="meter"></div>
+                <div id="sensor-3" class="meter activable-border inactive-border">
+                    <div class="value"></div>
+                </div>
             </div>
             <div class="status status-right">
-                <div class="meter"></div>
+                <div id="sensor-4" class="meter activable-border inactive-border">
+                    <div class="value"></div>
+                </div>
             </div>
         </div>
         <!--

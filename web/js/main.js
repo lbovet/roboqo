@@ -15,8 +15,8 @@ var currentProject = null;
 window.alert = console.log
 
 function load(project) {
-    $(".project").removeClass("active");
-    project.addClass("active");
+    $(".project").removeClass("active-project");
+    project.addClass("active-project");
     currentProject = project.html();
 
     localStorage.setItem("currentProject", project.html());
@@ -62,7 +62,7 @@ function list() {
                 var elt = $("<li></li>").html(name);
                 elt.addClass("project").bind("vclick", function(e) {
                     var project = $(e.currentTarget);
-                    if(!project.hasClass("active")) {
+                    if(!project.hasClass("active-project")) {
                         load(project);
                     }
                 });
@@ -71,7 +71,7 @@ function list() {
             if(!data.projects.length) {
                 newProject(true);
             } else {
-                if($(".active").length ==0) {
+                if($(".active-project").length ==0) {
                     var p = findProject(localStorage.getItem("currentProject"));
                     if(!p) {
                         p = $(".project").first();
@@ -134,8 +134,8 @@ function newProject(force) {
             Blockly.mainWorkspace.clear();
             save().then(list).always(function() {
                 project = findProject(name);
-                $(".project").removeClass("active");
-                project.addClass("active");
+                $(".project").removeClass("active-project");
+                project.addClass("active-project");
                 d.resolve();
             });
         } else {
@@ -187,23 +187,23 @@ $(document).ready(function () {
     });
 
     $("#project-new").bind("vclick", function(e) {
-        $("#project-new").toggleClass("active");
+        $("#project-new").toggleClass("active-project");
         e.preventDefault();
         newProject().always(function() {
-            $("#project-new").toggleClass("active");
+            $("#project-new").toggleClass("active-project");
         });
     });
 
     $("#project-del").bind("vclick", function(e) {
-        $("#project-del").toggleClass("active");
+        $("#project-del").toggleClass("active-project");
         e.preventDefault();
         if(window.confirm("Effacer "+currentProject+" ?")) {
             $.ajax({url:"/data/projects/"+currentProject, method:"DELETE"})
                 .then(list).always(function() {
-                    $("#project-del").toggleClass("active");
+                    $("#project-del").toggleClass("active-project");
                 });
         } else {
-            $("#project-del").toggleClass("active");
+            $("#project-del").toggleClass("active-project");
         }
     });
 
@@ -226,44 +226,15 @@ $(document).ready(function () {
         }
     });
 
-    // Event Bus
-    var eb;
-
-    function init() {
-        console.debug("connecting");
-        if (window.location.protocol === "file:") {
-            eb = new vertx.EventBus('http://localhost:8383/sock');
-        } else {
-            eb = new vertx.EventBus(window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/sock');
-        }
-        eb.onopen = function () {
-            console.log("open");
-            $("#feedback").addClass("active");
-            eb.registerHandler("script-main", function (msg, replyTo) {
-                $("#feedback").addClass("active");
-                $("#feedback").html(msg.status)
-            });
-
-        };
-
-        eb.onclose = function () {
-            $("#feedback").removeClass("active");
-            console.log("closed");
-            setTimeout(init, 5000);
-        };
-    }
-
-    init();
-
     $("#run").bind("vclick", function () {
-        eb.send('runtime', {
+        network.eb.send('runtime', {
             command: 'create',
             name: 'main',
             script: $("#script").val()
         }, function (reply) {
             if (reply.status === 'ok') {
                 console.log('Created');
-                eb.send('runtime', {
+                network.eb.send('runtime', {
                     command: "start",
                     name: "main"
                 });
@@ -272,4 +243,6 @@ $(document).ready(function () {
             }
         });
     });
+
+    network.init();
 });
