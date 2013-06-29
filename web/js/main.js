@@ -50,6 +50,13 @@ function save(xmlText) {
     }
 }
 
+function pushCode(code) {
+    return $.ajax({url: "/data/code.js", method:"PUT", data:code})
+        .fail(function(a, b, c) {
+            console.error(a, b, c);
+        });
+}
+
 function list() {
     console.log("list");
     var d= $.Deferred();
@@ -91,6 +98,7 @@ function list() {
 function initBlockly(blockly) {
     Blockly = blockly;
     var originalHide = Blockly.Toolbox.flyout_.hide;
+    Blockly.JavaScript.addReservedWords(['script', 'controller']);
     Blockly.Toolbox.flyout_.hide = function() {
         if(flyoutOpen) {
             unselectTools();
@@ -104,7 +112,8 @@ function initBlockly(blockly) {
             var xmlText = Blockly.Xml.domToText(xmlDom);
             if (startXmlText != xmlText) {
                 save(xmlText);
-                startXmlText = Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+                startXmlText = xmlText;
+                pushCode(Blockly.Generator.workspaceToCode('JavaScript'));
             }
         }
         Blockly.addChangeListener(change);

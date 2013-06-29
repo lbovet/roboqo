@@ -5,6 +5,8 @@
     <script type="text/javascript" src="js/blockly_compressed.js"></script>
     <script type="text/javascript" src="js/en_compressed.js"></script>
     <script type="text/javascript" src="js/javascript_compressed.js"></script>
+    <script type="text/javascript" src="js/blocks.js"></script>
+    <script type="text/javascript" src="js/generators.js"></script>
     <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
     <style>
         html, body {
@@ -61,47 +63,34 @@
 -->
 <xml id="toolbox" style="display: none">
     <category name="control">
-        <block type="controls_if"></block>
+        <block type="controls_whileUntil">
+            <value name="BOOL">
+                <block type="logic_boolean"><title name="BOOL">TRUE</title></block>
+            </value>
+        </block>
         <block type="controls_repeat_ext">
             <value name="TIMES">
                 <block type="math_number"><title name="NUM">10</title></block>
             </value>
         </block>
-        <block type="controls_whileUntil"></block>
-        <block type="controls_for">
-            <value name="FROM">
+        <block type="controls_if"></block>
+        <block type="controls_flow_statements"></block>
+        <block type="controls_wait">
+            <value name="TIME">
                 <block type="math_number"><title name="NUM">1</title></block>
             </value>
-            <value name="TO">
-                <block type="math_number"><title name="NUM">10</title></block>
-            </value>
         </block>
-        <block type="controls_forEach"></block>
-        <block type="controls_flow_statements"></block>
+        <block type="controls_button"></block>
     </category>
     <category name="logic">
         <block type="logic_compare"></block>
         <block type="logic_operation"></block>
         <block type="logic_negate"></block>
         <block type="logic_boolean"></block>
-        <block type="logic_null"></block>
-        <block type="logic_ternary"></block>
     </category>
     <category name="math">
         <block type="math_number"></block>
         <block type="math_arithmetic"></block>
-        <block type="math_single"></block>
-        <block type="math_trig"></block>
-        <block type="math_constant"></block>
-        <block type="math_number_property"></block>
-        <block type="math_change">
-            <value name="DELTA">
-                <block type="math_number"><title name="NUM">1</title></block>
-            </value>
-        </block>
-        <block type="math_round"></block>
-        <block type="math_on_list"></block>
-        <block type="math_modulo"></block>
         <block type="math_constrain">
             <value name="LOW">
                 <block type="math_number"><title name="NUM">1</title></block>
@@ -118,12 +107,40 @@
                 <block type="math_number"><title name="NUM">100</title></block>
             </value>
         </block>
-        <block type="math_random_float"></block>
     </category>
     <category name="movement">
+        <block type="movement_servo">
+            <value name="POSITION">
+                <block type="math_number"><title name="NUM">128</title></block>
+            </value>
+        </block>
+        <block type="movement_motor">
+            <value name="SPEED">
+                <block type="math_number"><title name="NUM">50</title></block>
+            </value>
+        </block>
+        <block type="movement_vibration">
+            <value name="SPEED">
+                <block type="math_number"><title name="NUM">50</title></block>
+            </value>
+        </block>
+    </category>
+    <category name="sensors">
+        <block type="sensor_raw"></block>
+    </category>
+    <category name="light">
+        <block type="light_led">
+            <value name="LIGHTNESS">
+                <block type="math_number"><title name="NUM">100</title></block>
+            </value>
+        </block>
+        <block type="light_triled">
+            <value name="COLOUR">
+                <block type="colour_picker"><title name="COLOUR">#ffcc00</title></block>
+            </value>
+        </block>
         <block type="colour_picker"></block>
         <block type="colour_random"></block>
-        <block type="colour_rgb"></block>
         <block type="colour_blend"></block>
     </category>
     <category name="Variables" custom="VARIABLE"></category>
