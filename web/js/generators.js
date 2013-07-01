@@ -1,6 +1,5 @@
 Blockly.JavaScript.controls_wait = function() {
     var time = Blockly.JavaScript.valueToCode(this, 'TIME', Blockly.JavaScript.ORDER_ATOMIC);
-
     var code = 'control.sleep('+time+"*1000);\n"
     return code;
 };
@@ -10,14 +9,12 @@ Blockly.JavaScript.movement_motor = function() {
     var speed = Blockly.JavaScript.valueToCode(this, 'SPEED', Blockly.JavaScript.ORDER_ATOMIC);
     var reverse = this.getTitleValue("REVERSE")==="TRUE";
     var code = 'controller.motor('+id+", "+(reverse?"-":"")+speed+");\n";
-    console.log(reverse);
     return code;
 };
 
 Blockly.JavaScript.movement_servo = function() {
     var id = this.getTitleValue("ID");
     var position = Blockly.JavaScript.valueToCode(this, 'POSITION', Blockly.JavaScript.ORDER_ATOMIC);
-
     var code = 'controller.servo('+id+", "+position+");\n";
     return code;
 };
@@ -25,7 +22,6 @@ Blockly.JavaScript.movement_servo = function() {
 Blockly.JavaScript.movement_vibration = function() {
     var id = this.getTitleValue("ID");
     var speed = Blockly.JavaScript.valueToCode(this, 'SPEED', Blockly.JavaScript.ORDER_ATOMIC);
-
     var code = 'controller.vibration('+id+", "+speed+");\n";
     return code;
 };
@@ -39,7 +35,6 @@ Blockly.JavaScript.sensor_raw = function() {
 Blockly.JavaScript.light_led = function() {
     var id = this.getTitleValue("ID");
     var lightness= Blockly.JavaScript.valueToCode(this, 'LIGHTNESS', Blockly.JavaScript.ORDER_ATOMIC);
-
     var code = 'controller.led('+id+", "+lightness+");\n";
     return code;
 };
@@ -47,11 +42,9 @@ Blockly.JavaScript.light_led = function() {
 Blockly.JavaScript.light_triled = function() {
     var id = this.getTitleValue("ID");
     var colour= Blockly.JavaScript.valueToCode(this, 'COLOUR', Blockly.JavaScript.ORDER_ATOMIC);
-
     var code = 'controller.triled('+id+", "+colour+");\n";
     return code;
 };
-
 
 Blockly.JavaScript.controls_button = function() {
     var block = Blockly.JavaScript.statementToCode(this, 'DO');

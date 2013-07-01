@@ -106,6 +106,10 @@ var state = function(){
         servo(4, 0);
         vibration(1, 0);
         vibration(2, 0);
+        sensor(1, 0);
+        sensor(2, 0);
+        sensor(3, 0);
+        sensor(4, 0);
         $(".activable").removeClass("active").addClass("inactive");
         $(".activable-border").css("background","").removeClass("active-border").addClass("inactive-border");
     }

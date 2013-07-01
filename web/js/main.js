@@ -1,7 +1,6 @@
 var Blockly;
 
 var flyoutOpen=false;
-
 var blocklyReady = $.Deferred();
 
 var unselectTools = function() {
@@ -135,7 +134,7 @@ function newProject(force) {
     var d = $.Deferred();
     var name;
     do {
-        name = window.prompt("Nom du nouveau projet");
+        name = window.prompt("New project");
     } while(force && !name)
     if(name && name.trim() !== "") {
         currentProject = name
@@ -209,7 +208,7 @@ $(document).ready(function () {
     $("#project-del").bind("vclick", function(e) {
         $("#project-del").toggleClass("active-project");
         e.preventDefault();
-        if(window.confirm("Effacer "+currentProject+" ?")) {
+        if(window.confirm("Delete "+currentProject+" ?")) {
             $.ajax({url:"/data/projects/"+currentProject, method:"DELETE"})
                 .then(list).always(function() {
                     $("#project-del").toggleClass("active-project");
@@ -239,19 +238,19 @@ $(document).ready(function () {
     });
 
     $("#run").bind("vclick", function () {
-        console.log("run");
-        network.eb.send('runtime', {
-            command: "stop",
-            name: "main"
-        });
-        network.eb.send('runtime', {
-            command: "start",
-            name: "main"
-        });
+        if(!$("#run").hasClass("disabled")) {
+            network.eb.send('runtime', {
+                command: "stop",
+                name: "main"
+            });
+            network.eb.send('runtime', {
+                command: "start",
+                name: "main"
+            });
+        }
     });
 
     $("#stop").bind("vclick", function () {
-        console.log("stop");
         network.eb.send('runtime', {
             command: "stop",
             name: "main"

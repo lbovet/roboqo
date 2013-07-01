@@ -12,13 +12,32 @@ public class HummingbirdController implements Controller {
 
     private final EventBus eventBus;
     private String controllerStatus="connecting";
-
+    private int[] sensors = new int[4];
+    private int[] sensorsNew = new int[4];
 
     public HummingbirdController() {
         this.eventBus = VertxLocator.vertx.eventBus();
         VertxLocator.vertx.setPeriodic(2000, new Handler<Long>() {
             public void handle(Long event) {
                 update(new JsonObject().putString("controller", controllerStatus));
+            }
+        });
+        VertxLocator.vertx.setPeriodic(500, new Handler<Long>() {
+            public void handle(Long event) {
+                JsonObject info = new JsonObject();
+                JsonObject sensorValues = new JsonObject();
+                info.putObject("sensor", sensorValues);
+                boolean update = false;
+                for(int i=0; i<4; i++) {
+                    if(sensorsNew[i] != sensors[i]) {
+                        sensorValues.putNumber(""+(i+1), sensorsNew[i]);
+                        sensors[i] = sensorsNew[i];
+                        update=true;
+                    }
+                }
+                if(update) {
+                    update(info);
+                }
             }
         });
     }
@@ -39,7 +58,7 @@ public class HummingbirdController implements Controller {
     }
 
     public int sensor(int id) {
-        return 0;
+        return sensors[id+1];
     }
 
 

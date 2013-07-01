@@ -16,10 +16,13 @@ var network = function(){
             eb.registerHandler("script-main", function (msg, replyTo) {
                 switch(msg.status) {
                     case "CREATED":
+                        $("#run").removeClass("disabled");
                         break;
                     case "RUNNING":
                         $("#run").addClass("active");
                         break;
+                    case "INVALID":
+                        $("#run").addClass("disabled");
                     default:
                         $("#run").removeClass("active");
                         state.reset();
