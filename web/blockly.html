@@ -24,7 +24,9 @@
 
         function init() {
             var toolbox = null;
-            goog.userAgent.MOBILE = true;
+            if("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch) {
+                goog.userAgent.MOBILE = true;
+            }
             Blockly.inject(document.body,
                     {path: '../../', trashcan:true, collapse: true, toolbox: document.getElementById('toolbox')});
             $(".blocklyToolboxDiv").hide();
