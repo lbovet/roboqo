@@ -1,5 +1,7 @@
 package li.chee.roboqo.runtime;
 
+import li.chee.roboqo.controller.HummingbirdController;
+import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.eventbus.Message;
@@ -11,14 +13,14 @@ import org.vertx.java.deploy.Verticle;
  */
 public class RuntimeVerticle extends Verticle {
 
-    Runner runner = new Runner();
-
     public void start() throws Exception {
         final EventBus eb = vertx.eventBus();
+        final Runner runner = new Runner(new HummingbirdController());
 
         eb.registerHandler("runtime", new Handler<Message<JsonObject>>() {
             public void handle(final Message<JsonObject> message) {
                 final String name = message.body.getString("name");
+                LoggerFactory.getLogger(Runner.class).debug("Got " + message.body);
                 switch(message.body.getString("command")) {
                     case "start":
                         runner.start(name);

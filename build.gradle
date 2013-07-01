@@ -21,7 +21,7 @@ dependencies {
     bundle      fileTree(dir: 'lib', include: '*.jar')
     compile     "org.vert-x:vertx-core:$vertxVersion"
     compile     "org.vert-x:vertx-platform:$vertxVersion"
-    compile     "org.slf4j:slf4j-simple:1.6.2"
+    compile     "org.slf4j:slf4j-jdk14:1.7.5"
     testCompile "junit:junit:4.7"
 }
 

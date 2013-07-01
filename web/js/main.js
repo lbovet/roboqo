@@ -50,8 +50,8 @@ function save(xmlText) {
     }
 }
 
-function pushCode(code) {
-    return $.ajax({url: "/data/code.js", method:"PUT", data:code})
+function pushCode() {
+    return $.ajax({url: "/scripts/main", method:"PUT", data:Blockly.Generator.workspaceToCode('JavaScript')})
         .fail(function(a, b, c) {
             console.error(a, b, c);
         });
@@ -98,7 +98,8 @@ function list() {
 function initBlockly(blockly) {
     Blockly = blockly;
     var originalHide = Blockly.Toolbox.flyout_.hide;
-    Blockly.JavaScript.addReservedWords(['script', 'controller']);
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = 'control.checkStop();\n';
+    Blockly.JavaScript.addReservedWords(['main', 'control', 'controller', 'log']);
     Blockly.Toolbox.flyout_.hide = function() {
         if(flyoutOpen) {
             unselectTools();
@@ -113,7 +114,7 @@ function initBlockly(blockly) {
             if (startXmlText != xmlText) {
                 save(xmlText);
                 startXmlText = xmlText;
-                pushCode(Blockly.Generator.workspaceToCode('JavaScript'));
+                pushCode();
             }
         }
         Blockly.addChangeListener(change);
@@ -161,7 +162,9 @@ $(document).bind('pageinit', function() {
 
 $(document).ready(function () {
 
-    blocklyReady.done(list);
+    blocklyReady.then(list).done(function() {
+        network.init(pushCode);
+    });
 
     // Layout
     var layout;
@@ -236,22 +239,24 @@ $(document).ready(function () {
     });
 
     $("#run").bind("vclick", function () {
+        console.log("run");
         network.eb.send('runtime', {
-            command: 'create',
-            name: 'main',
-            script: $("#script").val()
-        }, function (reply) {
-            if (reply.status === 'ok') {
-                console.log('Created');
-                network.eb.send('runtime', {
-                    command: "start",
-                    name: "main"
-                });
-            } else {
-                console.error('Failed to send task');
-            }
+            command: "stop",
+            name: "main"
+        });
+        network.eb.send('runtime', {
+            command: "start",
+            name: "main"
         });
     });
 
-    network.init();
+    $("#stop").bind("vclick", function () {
+        console.log("stop");
+        network.eb.send('runtime', {
+            command: "stop",
+            name: "main"
+        });
+    });
+
+    network.init(pushCode);
 });

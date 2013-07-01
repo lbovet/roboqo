@@ -10,8 +10,8 @@ import org.vertx.java.core.Handler;
 public class RunnerTest {
     @Test
     public void simpleScript() throws InterruptedException {
-        final Runner r = new Runner();
-        r.create("main", "__log__.info('hello')", new Handler<Runner.Status>() {
+        final Runner r = new Runner(null);
+        r.create("main", "log.info('hello')", new Handler<Runner.Status>() {
             public void handle(Runner.Status status) {
                 LoggerFactory.getLogger("RunnerTest").info(status.toString());
                 if(status== Runner.Status.DONE) {

@@ -1,15 +1,16 @@
 Blockly.JavaScript.controls_wait = function() {
     var time = Blockly.JavaScript.valueToCode(this, 'TIME', Blockly.JavaScript.ORDER_ATOMIC);
 
-    var code = 'script.sleep('+time+"*1000);\n"
+    var code = 'control.sleep('+time+"*1000);\n"
     return code;
 };
 
 Blockly.JavaScript.movement_motor = function() {
     var id = this.getTitleValue("ID");
     var speed = Blockly.JavaScript.valueToCode(this, 'SPEED', Blockly.JavaScript.ORDER_ATOMIC);
-
-    var code = 'controller.motor('+id+", "+speed+");\n";
+    var reverse = this.getTitleValue("REVERSE")==="TRUE";
+    var code = 'controller.motor('+id+", "+(reverse?"-":"")+speed+");\n";
+    console.log(reverse);
     return code;
 };
 
@@ -55,6 +56,6 @@ Blockly.JavaScript.light_triled = function() {
 Blockly.JavaScript.controls_button = function() {
     var block = Blockly.JavaScript.statementToCode(this, 'DO');
     var name = this.getTitleValue('NAME');
-    var code = 'buttons.'+name+' = function() {\n' +block+"};\n";
+    var code = 'buttons["'+name+'"] = function() {\n' +block+"};\n";
     return code;
 };

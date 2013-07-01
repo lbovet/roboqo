@@ -2,7 +2,7 @@ var network = function(){
 
     var eb;
 
-    function init() {
+    function init(oninit) {
         console.debug("connecting");
         state.server.connecting();
         if (window.location.protocol === "file:") {
@@ -14,18 +14,28 @@ var network = function(){
             console.log("open");
             state.server.connected();
             eb.registerHandler("script-main", function (msg, replyTo) {
-                $("#feedback").addClass("active");
-                $("#feedback").html(msg.status)
+                switch(msg.status) {
+                    case "CREATED":
+                        break;
+                    case "RUNNING":
+                        $("#run").addClass("active");
+                        break;
+                    default:
+                        $("#run").removeClass("active");
+                        state.reset();
+                }
             });
             eb.registerHandler("controller-status", function (msg, replyTo) {
                 state.update(msg);
             });
             network.eb = eb;
+            oninit();
         };
         eb.onclose = function () {
             console.log("closed");
             state.server.disconnected();
-            setTimeout(init, 5000);
+            state.controller.connecting();
+            setTimeout(function() { init(oninit) }, 5000);
         };
     }
 

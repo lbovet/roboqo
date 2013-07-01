@@ -84,8 +84,8 @@
                 </div>
             </div>
             <div class="contents buttons">
-                <button class="button btn btn-success"><i class='icon-c-play'></i></button>
-                <button class="button btn disabled"><i class='icon-c-stop-2'></i></button>
+                <button id="run" class="button btn btn-success"><i class='icon-c-play'></i></button>
+                <button id="stop" class="button btn btn-danger"><i class='icon-c-stop-2'></i></button>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
                 <i id="controller-status" class="status-icon icon-c-plug inactive"></i>
             </div>
             <div class="status status-left">
-                <i class="status-icon icon-c-steam-2"></i>
+                <i class="status-icon icon-c-settings3"></i>
             </div>
             <div class="status status-center">
                 <div id="servo-1" class="rotating activable inactive">
@@ -164,7 +164,7 @@
             <div class="status status-left">
                 <i class="status-icon icon-c-gauge"></i>
             </div>
-            <div class="status status-center activable-border">
+            <div class="status status-center">
                 <div id="sensor-1" class="meter activable-border inactive-border">
                     <div class="value"></div>
                 </div>
@@ -185,15 +185,5 @@
                 </div>
             </div>
         </div>
-        <!--
-        <textarea id="script" class="big-textarea">
-            __log__.info("hello, you");
-            __control__.sleep(10000);
-            __log__.info("bye");
-        </textarea>
-        <button id="run">Run</button>
-        <div id="feedback">---</div>
-        </div>
-        -->
     </body>
 </html>

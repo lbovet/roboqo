@@ -20,11 +20,13 @@ var state = function(){
             $(".activable").removeClass("active").addClass("inactive");
             $("#controller-status").removeClass();
             $("#controller-status").addClass("status-icon").addClass("icon-c-plug").addClass("problem");
+            reset();
         },
         connecting : function() {
             $(".activable").removeClass("active").addClass("inactive");
             $("#controller-status").removeClass();
             $("#controller-status").addClass("status-icon").addClass("icon-c-plug").addClass("inactive");
+            reset();
         },
         connected : function() {
             $("#controller-status").removeClass();
@@ -95,13 +97,26 @@ var state = function(){
         sensor.children().first().css("width", (32*value/255)+"px");
     }
 
+    function reset() {
+        motor(1, 0);
+        motor(2, 0);
+        servo(1, 0);
+        servo(2, 0);
+        servo(3, 0);
+        servo(4, 0);
+        vibration(1, 0);
+        vibration(2, 0);
+        $(".activable").removeClass("active").addClass("inactive");
+        $(".activable-border").css("background","").removeClass("active-border").addClass("inactive-border");
+    }
+
     function update(status) {
         $.each(status, function(k, v) {
             if(k === "controller") {
                 switch(v) {
-                    case "connecting": server.connecting(); break;
-                    case "connected": server.connected(); break;
-                    case "disconnected": server.disconnected(); break;
+                    case "connecting": controller.connecting(); break;
+                    case "connected": controller.connected(); break;
+                    case "disconnected": controller.disconnected(); break;
                 }
             } else {
                 $.each(v, function(id,value) {
@@ -120,7 +135,8 @@ var state = function(){
         led: led,
         triled: triled,
         sensor: sensor,
-        update: update
+        update: update,
+        reset: reset
     };
 
     return functions;

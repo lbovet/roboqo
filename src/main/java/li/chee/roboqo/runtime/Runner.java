@@ -1,5 +1,6 @@
 package li.chee.roboqo.runtime;
 
+import li.chee.roboqo.controller.Controller;
 import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
 
@@ -11,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Runs the statusHandlers in their own threads.
@@ -21,6 +24,8 @@ public class Runner {
 
     public static final org.slf4j.Logger log = LoggerFactory.getLogger(Runner.class);
 
+    private Controller controller;
+
     enum Status {
         CREATED,
         INVALID,
@@ -30,10 +35,28 @@ public class Runner {
     }
 
     private Map<String,Control> controls = new HashMap<>();
-    private Executor executor = Executors.newCachedThreadPool();
+    private Executor executor = Executors.newCachedThreadPool(new ThreadFactory() {
+        public Thread newThread(Runnable runnable) {
+                Thread t = new Thread(runnable);
+                t.setDaemon(true);
+                return t;
+            }
+    });
 
     private ScriptEngineManager manager = new ScriptEngineManager();
     private ScriptEngine engine = manager.getEngineByName("JavaScript");
+
+    public Runner(Controller controller) {
+        controller.init();
+        this.controller = controller;
+        setGlobal("controller", controller);
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                log.debug("Shutting down pool");
+                ((ThreadPoolExecutor)executor).shutdownNow();
+            }
+        }));
+    }
 
     public class Control {
 
@@ -44,10 +67,19 @@ public class Runner {
         public boolean shouldStop = false;
 
         public void sleep(long millis) {
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
+            long remains=millis;
+            while(remains > 0) {
+                long step = Math.min(remains, 500);
+                remains = remains-step;
+                    try {
+                        Thread.sleep(step);
+                    } catch (InterruptedException e) {
+                }
+                checkStop();
             }
+        }
+
+        public void checkStop() {
             if(shouldStop) {
                 throw new StoppedException();
             }
@@ -59,19 +91,21 @@ public class Runner {
     }
 
     public void create(String name, String script, Handler<Status> statusHandler) {
+        stop(name);
         Control control = new Control();
         control.statusHandler = statusHandler;
         controls.put(name, control);
         report(name, Status.CREATED);
         try {
-            engine.eval("function "+name+"(__log__, __control__) {\n"+script+"\n}");
+            engine.eval("function "+name+"(log, control) {\n"+script+"\n}");
         } catch (ScriptException e) {
             report(name, Status.INVALID);
-            log.error("Could not create function "+name, e);
+            log.error("Could not create function " + name, e);
         }
     }
 
     public void start(final String name) {
+        log.debug("Starting " + name);
         final Invocable inv = (Invocable) engine;
         final Control control = controls.get(name);
         control.shouldStop = false;
@@ -101,6 +135,7 @@ public class Runner {
                         report(name, Status.INVALID);
                     }
                 } finally {
+                    controller.stop();
                     control.thread = null;
                 }
             }
@@ -110,7 +145,6 @@ public class Runner {
     public void stop(String name) {
         final Control control = controls.get(name);
         if(control == null) {
-            log.error("Script was not created " + name);
             report(name, Status.INVALID);
             return;
         }
@@ -121,10 +155,14 @@ public class Runner {
         } catch(NullPointerException e) {
             // Ignore. The thread can have finished already.
         }
+        controller.stop();
     }
 
     private void report(String name, Status status) {
-        controls.get(name).statusHandler.handle(status);
+        Control control = controls.get(name);
+        if(control!=null) {
+            control.statusHandler.handle(status);
+        }
     }
 
 }

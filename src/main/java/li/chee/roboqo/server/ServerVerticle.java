@@ -118,22 +118,7 @@ public class ServerVerticle extends Verticle {
         permitted.add(new JsonObject());
         vertx.createSockJSServer(server).bridge(config, permitted, permitted);
 
-        vertx.eventBus().registerHandler("hello", new Handler<Message<JsonObject>>() {
-            @Override
-            public void handle(Message<JsonObject> event) {
-                container.getLogger().info("Got message");
-                event.reply(new JsonObject().putString("status", "ok"));
-            }
-        });
-
-        vertx.setPeriodic(2000, new Handler<Long>() {
-            @Override
-            public void handle(Long event) {
-                vertx.eventBus().send("feedback", new JsonObject().putNumber("value", new Date().getTime()));
-            }
-        });
-
-        container.deployWorkerVerticle("li.chee.roboqo.runtime.RuntimeVerticle", null, 1, new Handler<String>() {
+        container.deployVerticle("li.chee.roboqo.runtime.RuntimeVerticle", null, 1, new Handler<String>() {
             public void handle(String event) {
                 server.listen(port);
                 container.getLogger().info("\nRoboqo started on http://localhost:" + port);
