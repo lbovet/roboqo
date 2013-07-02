@@ -21,13 +21,32 @@ dependencies {
     bundle      fileTree(dir: 'lib', include: '*.jar')
     compile     "org.vert-x:vertx-core:$vertxVersion"
     compile     "org.vert-x:vertx-platform:$vertxVersion"
-    compile     "org.slf4j:slf4j-jdk14:1.7.5"
+    compile     "org.slf4j:slf4j-log4j12:1.5.8"
     testCompile "junit:junit:4.7"
 }
 
 task runVertx(type:Exec, dependsOn: 'compileJava') {
     executable 'vertx'
     args = ['run', "$mainVerticle",
-            '-cp', "${buildDir}/classes/main:${sourceSets.main.compileClasspath.getAsPath()}"]
+            '-cp', "${buildDir}/classes/main:${buildDir}/resources/main:${sourceSets.main.compileClasspath.getAsPath()}"]
 }
 
+task bin(type: Copy) {
+    from 'bin'
+    into 'build/dist'
+}
+
+task web(type: Copy) {
+    from 'web'
+    into 'build/dist/web'
+}
+
+task dist(type: Copy, dependsOn: ['jar', 'bin', 'web']) {
+    from 'lib'
+    from 'build/libs'
+    into 'build/dist/lib'
+}
+
+task zip(type: Zip, dependsOn: 'dist') {
+    from 'build/dist'
+}

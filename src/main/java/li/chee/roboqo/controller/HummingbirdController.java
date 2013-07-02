@@ -1,9 +1,13 @@
 package li.chee.roboqo.controller;
 
+import edu.cmu.ri.createlab.hummingbird.Hummingbird;
+import edu.cmu.ri.createlab.hummingbird.HummingbirdFactory;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.EventBus;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.deploy.impl.VertxLocator;
+
+import java.awt.*;
 
 /**
  * @author Laurent Bovet (laurent.bovet@windmaster.ch)
@@ -15,7 +19,11 @@ public class HummingbirdController implements Controller {
     private int[] sensors = new int[4];
     private int[] sensorsNew = new int[4];
 
+    private Hummingbird hummingbird;
+    private boolean disableMotors=false;
+
     public HummingbirdController() {
+        disableMotors = System.getProperty("motors", "on").equals("off");
         this.eventBus = VertxLocator.vertx.eventBus();
         VertxLocator.vertx.setPeriodic(2000, new Handler<Long>() {
             public void handle(Long event) {
@@ -43,47 +51,80 @@ public class HummingbirdController implements Controller {
     }
 
     public void motor(int id, int speed) {
+        if(hummingbird!=null && !disableMotors) {
+            hummingbird.setMotorVelocity(id, speed);
+        }
         update(new JsonObject().putObject("motor",
                 new JsonObject().putNumber("" + id, speed)));
     }
 
     public void servo(int id, int position) {
+        if(hummingbird!=null) {
+            hummingbird.setServoPosition(id, position);
+        }
         update(new JsonObject().putObject("servo",
                 new JsonObject().putNumber("" + id, position)));
     }
 
     public void vibration(int id, int speed) {
+        if(hummingbird!=null) {
+            hummingbird.setVibrationMotorSpeed(id, speed);
+        }
         update(new JsonObject().putObject("vibration",
                 new JsonObject().putNumber("" + id, speed)));
     }
 
     public int sensor(int id) {
-        return sensors[id+1];
+        if(hummingbird!=null) {
+            return hummingbird.getAnalogInputValue(id);
+        } else {
+            return 0;
+        }
     }
 
-
     public void led(int id, int lightness) {
+        if(hummingbird!=null) {
+            hummingbird.setLED(id, lightness);
+        }
         update(new JsonObject().putObject("led",
                 new JsonObject().putNumber("" + id, lightness)));
     }
 
-    public void triled(int id, String color) {
+    public void triled(int id, String colorString) {
+        if(hummingbird!=null) {
+            Color color = Color.decode(colorString);
+            hummingbird.setFullColorLED(id, color.getRed(), color.getGreen(), color.getBlue());
+        }
         update(new JsonObject().putObject("triled",
-                new JsonObject().putString("" + id, color)));
+                new JsonObject().putString("" + id, colorString)));
     }
 
     @Override
     public void init() {
-        VertxLocator.vertx.setTimer(2000, new Handler<Long>() {
-            public void handle(Long event) {
-                controllerStatus = "connected";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(!System.getProperty("controller", "").equals("none")) {
+                    hummingbird = HummingbirdFactory.create();
+                    VertxLocator.vertx.setPeriodic(500, new Handler<Long>() {
+                        public void handle(Long event) {
+                            Hummingbird.HummingbirdState state = hummingbird.getState();
+                            for(int i=0; i<4; i++) {
+                                sensorsNew = state.getAnalogInputValues();
+                            }
+                        }
+                    });
+                    controllerStatus = "connected";
+                }
             }
-        });
+        }, "Initializer").start();
     }
 
     @Override
     public void stop() {
-
+        if(hummingbird!=null) {
+            hummingbird.emergencyStop();
+        }
     }
 
     private void update(JsonObject status) {

@@ -47,7 +47,9 @@ public class Runner {
     private ScriptEngine engine = manager.getEngineByName("JavaScript");
 
     public Runner(Controller controller) {
-        controller.init();
+        if(controller!=null) {
+            controller.init();
+        }
         this.controller = controller;
         setGlobal("controller", controller);
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -100,7 +102,7 @@ public class Runner {
             engine.eval("function "+name+"(log, control) {\n"+script+"\n}");
         } catch (ScriptException e) {
             report(name, Status.INVALID);
-            log.error("Could not create function " + name, e);
+            log.warn("Could not create function " + name +": "+e.getMessage());
         }
     }
 
@@ -135,7 +137,9 @@ public class Runner {
                         report(name, Status.INVALID);
                     }
                 } finally {
-                    controller.stop();
+                    if(controller!=null) {
+                        controller.stop();
+                    }
                     control.thread = null;
                 }
             }

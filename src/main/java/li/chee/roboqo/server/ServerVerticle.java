@@ -1,8 +1,9 @@
 package li.chee.roboqo.server;
 
 import li.chee.vertx.reststorage.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vertx.java.core.Handler;
-import org.vertx.java.core.SimpleHandler;
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.http.HttpServer;
@@ -22,6 +23,7 @@ import java.util.Date;
 public class ServerVerticle extends Verticle {
 
     int port;
+    private Logger logger = LoggerFactory.getLogger(ServerVerticle.class);
 
     @Override
     public void start() throws Exception {
@@ -62,13 +64,13 @@ public class ServerVerticle extends Verticle {
                                     public void handle(Message<JsonObject> reply) {
                                         switch (reply.body.getString("status")) {
                                             case "ok":
-                                                container.getLogger().debug("Saved script " + name);
+                                                logger.debug("Saved script " + name);
                                                 request.response.statusCode = 200;
                                                 request.response.statusMessage = "OK";
                                                 break;
                                             case "error":
-                                                container.getLogger().error("Bad script " + name);
-                                                container.getLogger().debug("Bad script " + buffer.toString());
+                                                logger.error("Bad script " + name);
+                                                logger.debug("Bad script " + buffer.toString());
                                                 request.response.statusCode = 400;
                                                 request.response.statusMessage = "Bad script";
                                                 break;
@@ -88,7 +90,7 @@ public class ServerVerticle extends Verticle {
                 request.bodyHandler(new Handler<Buffer>() {
                     public void handle(Buffer buffer) {
                         vertx.eventBus().send("runtime", new JsonObject().putString("command", "start").putString("name", name));
-                        container.getLogger().debug("Created execution for " + name);
+                        logger.debug("Created execution for " + name);
                         request.response.statusCode = 202;
                         request.response.statusMessage = "Accepted";
                         request.response.end();
@@ -103,7 +105,7 @@ public class ServerVerticle extends Verticle {
                 request.bodyHandler(new Handler<Buffer>() {
                     public void handle(Buffer buffer) {
                         vertx.eventBus().send("runtime", new JsonObject().putString("command", "stop").putString("name", name));
-                        container.getLogger().debug("Stopping execution for " + name);
+                        logger.debug("Stopping execution for " + name);
                         request.response.statusCode = 200;
                         request.response.statusMessage = "OK";
                         request.response.end();
@@ -121,7 +123,7 @@ public class ServerVerticle extends Verticle {
         container.deployVerticle("li.chee.roboqo.runtime.RuntimeVerticle", null, 1, new Handler<String>() {
             public void handle(String event) {
                 server.listen(port);
-                container.getLogger().info("\nRoboqo started on http://localhost:" + port);
+                System.err.println("Roboqo started on http://localhost:" + port);
             }
         });
     }
