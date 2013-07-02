@@ -1,0 +1,67 @@
+Roboqo includes parts or whole of the following excellent projects. Thanks to their authors!
+
+Blockly
+https://code.google.com/p/blockly/
+Licensed under Apache License 2.0, http://www.apache.org/licenses/LICENSE-2.0
+
+Hummingbird Robot
+https://code.google.com/p/hummingbird-robot/
+Licensed under GNU GPL v2, http://www.gnu.org/licenses/gpl-2.0.html
+
+Bootstrap
+http://twitter.github.io/bootstrap/
+Licensed under Apache License 2.0, http://www.apache.org/licenses/LICENSE-2.0
+
+JQuery
+http://jquery.com/
+Licensed under MIT license, https://jquery.org/license/
+
+JQuery Mobile
+http://jquerymobile.com/
+Licensed under MIT license, https://jquery.org/license/
+
+JQuery Layout
+http://layout.jquery-dev.net/
+Dual-licensed under GPL v3, http://www.gnu.org/licenses/gpl.html and MIT license, https://jquery.org/license/
+
+Icon sets prepared with help of http://icomoon.io/:
+
+ Brankic1979
+ http://brankic1979.com/icons/
+ Free for commercial and personal use
+
+ Steadysets by Tommy Sähl
+ http://steadysets.com/
+ Free for commercial and personal use
+
+ Typicons by Stephen Hutchings
+ http://typicons.com/
+ Free for commercial and personal use
+
+ WebHostingHub Glyphs
+ http://www.webhostinghub.com/glyphs/
+ Licensed under SIL Open Font License, http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL
+
+ Font Awesome by Dave Gandy
+ http://fortawesome.github.io/Font-Awesome/
+ Licensed under SIL Open Font License 1.1, http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL
+
+ Entypo by Daniel Bruce
+ http://www.entypo.com/
+ Licensed under CC BY-SA 3.0, http://creativecommons.org/licenses/by-sa/3.0/
+
+ IcoMoon Free by Keyamoon
+ http://icomoon.io/
+ Licensed under CC BY 3.0, http://creativecommons.org/licenses/by/3.0/
+
+ Broccolidry by Visual Idiot
+ http://dribbble.com/shots/587469-Free-16px-Broccolidryiconsaniconsetitisfullof-icons
+ Free for commercial and personal use
+
+ Meteocons by Alessio Atzeni
+ http://www.alessioatzeni.com/meteocons/
+ Free for commercial and personal use
+
+ Iconic by P.J. Onori
+ http://somerandomdude.com/work/iconic/
+ Licensed under CC BY-SA 3.0, http://creativecommons.org/licenses/by-sa/3.0/
