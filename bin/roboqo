@@ -1,0 +1,19 @@
+#!/bin/sh
+
+cd $(dirname $0)
+while getopts ":hv" option; do
+  case "$option" in
+    h) echo "Usage: roboqo [-d]"
+       exit
+       ;;
+    v) verbosity=-debug
+       ;;
+    ?) echo "illegal option: $OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+export VERTX_OPTS="-Djava.library.path=$PWD/lib -Dlog4j.configuration=log4j${verbosity}.xml $ROBOQO_OPTS"
+CLASSPATH=$(echo lib/*.jar | tr ' ' ':')
+vertx run li.chee.roboqo.server.ServerVerticle -cp $CLASSPATH

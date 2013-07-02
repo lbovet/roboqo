@@ -13,7 +13,10 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.deploy.Verticle;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.Properties;
 
 /**
  * Entry point.
@@ -123,7 +126,23 @@ public class ServerVerticle extends Verticle {
         container.deployVerticle("li.chee.roboqo.runtime.RuntimeVerticle", null, 1, new Handler<String>() {
             public void handle(String event) {
                 server.listen(port);
-                System.err.println("Roboqo started on http://localhost:" + port);
+                Properties props = new Properties();
+                InputStream in=null;
+                try {
+                    in = getClass().getClassLoader().getResourceAsStream("build.properties");
+                    props.load(in);
+                } catch (IOException e) {
+                    logger.error("Could not load build.properties", e);
+                } finally {
+                    if(in!=null) {
+                        try {
+                            in.close();
+                        } catch (IOException e) {
+                            // ignore
+                        }
+                    }
+                }
+                System.err.println("Roboqo "+props.getProperty("version")+" started on http://localhost:" + port);
             }
         });
     }
