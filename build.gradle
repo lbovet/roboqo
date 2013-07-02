@@ -19,10 +19,10 @@ configurations {
 
 dependencies {
     compile     fileTree(dir: 'lib', include: '*.jar')
-    bundle      fileTree(dir: 'lib', include: '*.jar')
     compile     "org.vert-x:vertx-core:$vertxVersion"
     compile     "org.vert-x:vertx-platform:$vertxVersion"
     compile     "org.slf4j:slf4j-log4j12:1.5.8"
+    bundle     "org.slf4j:slf4j-log4j12:1.5.8"
     testCompile "junit:junit:4.7"
 }
 
@@ -50,6 +50,7 @@ task web(type: Copy) {
 
 task dist(type: Copy, dependsOn: ['jar', 'bin', 'web']) {
     from 'lib'
+    from configurations.bundle
     from 'build/libs'
     into 'build/dist/lib'
 }
