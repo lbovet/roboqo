@@ -105,8 +105,11 @@ function list() {
             }
             d.resolve();
         })
-        .fail(function(a, b, c) {
-            console.error(a, b, c);
+        .fail(function(xhr, b, c) {
+            if(xhr && xhr.status==404) {
+                newProject(true);
+            }
+            console.warn(a, b, c);
             d.resolve();
         });
     return d.promise();

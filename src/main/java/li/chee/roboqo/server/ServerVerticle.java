@@ -52,8 +52,13 @@ public class ServerVerticle extends Verticle {
         final HttpServer server = vertx.createHttpServer();
         RouteMatcher routeMatcher = new RouteMatcher();
         server.requestHandler(routeMatcher);
-        EtagStore etagStore = new EmptyEtagStore();
-        //EtagStore etagStore = new SharedMapEtagStore();
+        EtagStore etagStore;
+
+        if(System.getProperty("cache", "on").equals("on")) {
+            etagStore = new SharedMapEtagStore(vertx);
+        } else {
+            etagStore = new EmptyEtagStore();
+        }
 
         // Stores the projects and the blocks
         RestStorageHandler dataStorageHandler =

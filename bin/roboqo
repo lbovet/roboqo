@@ -1,12 +1,12 @@
 #!/bin/sh
 
 cd $(dirname $0)
-while getopts ":hv" option; do
+while getopts ":hd" option; do
   case "$option" in
     h) echo "Usage: roboqo [-d]"
        exit
        ;;
-    v) verbosity=-debug
+    d) verbosity=-debug
        ;;
     ?) echo "illegal option: $OPTARG" >&2
        echo "$usage" >&2
@@ -14,6 +14,6 @@ while getopts ":hv" option; do
        ;;
   esac
 done
-export VERTX_OPTS="-Djava.library.path=$PWD/lib -Dlog4j.configuration=log4j${verbosity}.xml $ROBOQO_OPTS"
+export VERTX_OPTS="-Dlog4j.configuration=log4j${verbosity}.xml $ROBOQO_OPTS"
 CLASSPATH=$(echo lib/*.jar | tr ' ' ':')
-vertx run li.chee.roboqo.server.ServerVerticle -cp $CLASSPATH
+LD_LIBRARY_PATH=$PWD/lib vertx run li.chee.roboqo.server.ServerVerticle -cp $CLASSPATH
