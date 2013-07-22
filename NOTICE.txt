@@ -8,6 +8,15 @@ Hummingbird Robot
 https://code.google.com/p/hummingbird-robot/
 Licensed under GNU GPL v2, http://www.gnu.org/licenses/gpl-2.0.html
 
+Apache Commons
+http://commons.apache.org/
+Licensed under Apache License 2.0, http://www.apache.org/licenses/LICENSE-2.0
+
+Free TTS
+Portions Copyright 2001-2004 Sun Microsystems, Inc.
+Portions Copyright 1999-2001 Language Technologies Institute,
+Licensed under BSD-Style License, http://freetts.sourceforge.net/license.terms
+
 Bootstrap
 http://twitter.github.io/bootstrap/
 Licensed under Apache License 2.0, http://www.apache.org/licenses/LICENSE-2.0

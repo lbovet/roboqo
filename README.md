@@ -9,7 +9,7 @@ It is intended to run on embedded linux boards like the Raspberry Pi and control
 License
 -------
 
-Still unclear since code from many sources will be included. Probably GPL v3.
+GPL v3
 
 Requisites
 ----------
